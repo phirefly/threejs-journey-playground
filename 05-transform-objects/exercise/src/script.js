@@ -12,7 +12,7 @@ const scene = new THREE.Scene()
 const geometry = new THREE.BoxGeometry(1, 1, 1)
 const material = new THREE.MeshBasicMaterial({ color: 0xff0000 })
 const mesh = new THREE.Mesh(geometry, material)
-mesh.position.x = 15
+mesh.position.x = -25
 mesh.position.y = -5
 mesh.position.z = 3
 mesh.position.normalize()
@@ -49,8 +49,24 @@ const sizes = {
 const camera = new THREE.PerspectiveCamera(75, sizes.width / sizes.height)
 camera.position.z = 3
 scene.add(camera)
-camera.lookAt(new THREE.Vector3(3,0,0))
+// camera.lookAt(new THREE.Vector3(3,0,0))
 console.log(mesh.position.distanceTo(camera.position))
+
+const group = new THREE.Group()
+scene.add(group)
+const cube1 = new THREE.Mesh(
+    new THREE.BoxGeometry(1,1,1),
+    new THREE.MeshBasicMaterial({color: 0xff0000})
+)
+group.add(cube1)
+
+const cube2 = new THREE.Mesh(
+    new THREE.BoxGeometry(1,1,1),
+    new THREE.MeshBasicMaterial({color: 0xefefef})
+)
+cube2.position.x = -2
+group.add(cube2)
+group.rotation.y = 3
 
 /**
  * Renderer
