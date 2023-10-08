@@ -1,4 +1,5 @@
 import * as THREE from 'three'
+import gsap from 'gsap'
 
 // Canvas
 const canvas = document.querySelector('canvas.webgl')
@@ -30,15 +31,20 @@ const renderer = new THREE.WebGLRenderer({
 renderer.setSize(sizes.width, sizes.height)
 
 // Use Clock instead
-const clock = new THREE.Clock()
+// const clock = new THREE.Clock()
+
+// Note: Green Sck has ts own animation loop but you still need to call render
+gsap.to(mesh.position, { duration: 1, delay: 1, x: 2 })
+gsap.to(mesh.position, { duration: 1, delay: 2, x: -2 })
+gsap.to(mesh.position, { duration: 1, delay: 3, x: 0 })
 
 const animationOn = false
 
 const looper = () => {
-    const time = clock.getElapsedTime() // Do not use getDelta(). It will not work
+    // const time = clock.getElapsedTime() // Do not use getDelta(). It will not work
     // Update
     // mesh.position.x += .01
-    mesh.rotation.x = time * Math.PI * 2 // One rotation per second
+    // mesh.rotation.x = time * Math.PI * 2 // One rotation per second
     // mesh.rotation.y += .01 * time
     // mesh.rotation.y = .1 * time
     // Render
