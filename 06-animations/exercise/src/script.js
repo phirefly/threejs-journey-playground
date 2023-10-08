@@ -29,25 +29,26 @@ const renderer = new THREE.WebGLRenderer({
 })
 renderer.setSize(sizes.width, sizes.height)
 
-// Time
-let time = Date.now
+// Use Clock instead
+const clock = new THREE.Clock()
 
-// Animations
+const animationOn = false
 
 const looper = () => {
-    const currentTime = Date.now()
-    const deltaTime = currentTime - time
-    time = currentTime //Use time to make the animation run regardless of the frame rate
-    console.log(currentTime)
-
+    const time = clock.getElapsedTime() // Do not use getDelta(). It will not work
     // Update
     // mesh.position.x += .01
-    mesh.rotation.x += .05 * time
-    mesh.rotation.y += .01 * time
+    mesh.rotation.x = time * Math.PI * 2 // One rotation per second
+    // mesh.rotation.y += .01 * time
+    // mesh.rotation.y = .1 * time
     // Render
     renderer.render(scene, camera)
     console.log('loop')
-    // window.requestAnimationFrame(looper)
+
+    if (animationOn === true) {
+        window.requestAnimationFrame(looper)
+    }
+
 }
 
 looper();
