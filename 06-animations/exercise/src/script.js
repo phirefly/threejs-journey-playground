@@ -1,10 +1,12 @@
 import * as THREE from 'three'
 import gsap from 'gsap'
+import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js'
 
 const cursor = {
     x: 0,
     y: 0
 }
+
 
 // Cursor
 window.addEventListener('mousemove', (event) => {
@@ -43,6 +45,12 @@ const camera = new THREE.PerspectiveCamera(60, sizes.width / sizes.height, 0.1, 
 camera.position.z = 3
 scene.add(camera)
 
+// Controls
+const controls = new OrbitControls(camera, canvas)
+controls.enableDamping = true
+// controls.target.y = 2
+// controls.update()
+
 // Renderer
 const renderer = new THREE.WebGLRenderer({
     canvas: canvas
@@ -60,7 +68,7 @@ const clock = new THREE.Clock()
 const animationOn = true
 
 const looper = () => {
-    const time = clock.getElapsedTime() // Do not use getDelta(). It will not work
+    // const time = clock.getElapsedTime() // Do not use getDelta(). It will not work
     // // Update
     // mesh.position.y += .01
     // mesh.rotation.x = time * Math.PI * 2 // One rotation per second
@@ -68,13 +76,14 @@ const looper = () => {
     // mesh.rotation.y += .1
     // mesh.rotation.y = .1 * time
     // Render
+    controls.update()
     renderer.render(scene, camera)
-    console.log('loop')
 
-    if (animationOn === true) {
-        camera.position.x = cursor.x * 10 // 10 is the distance from the camera
-        camera.position.y = -cursor.y * 10
-        camera.lookAt(mesh.position)
+    if (animationOn === false) {
+        // camera.position.x = Math.sin(cursor.x * Math.PI * 2) * 3
+        // camera.position.z = Math.cos(cursor.x * Math.PI * 2) * 3
+        // camera.position.y = cursor.y * 5
+        // camera.lookAt(mesh.position)
         window.requestAnimationFrame(looper)
     }
 
