@@ -20,7 +20,11 @@ const sizes = {
 }
 
 // Camera
-const camera = new THREE.PerspectiveCamera(75, sizes.width / sizes.height)
+const camera = new THREE.PerspectiveCamera(60, sizes.width / sizes.height, 0.1, 100)
+// First parameter: the vertical field of view
+// Second parameter: the aspect ratio (width/height of the render)
+// Third parameter: the near plane
+// Fourth parameter: the far plane
 camera.position.z = 3
 scene.add(camera)
 
@@ -31,22 +35,22 @@ const renderer = new THREE.WebGLRenderer({
 renderer.setSize(sizes.width, sizes.height)
 
 // Use Clock instead
-// const clock = new THREE.Clock()
+const clock = new THREE.Clock()
 
 // Note: Green Sck has ts own animation loop but you still need to call render
-gsap.to(mesh.position, { duration: 1, delay: 1, x: 2 })
-gsap.to(mesh.position, { duration: 1, delay: 2, x: -2 })
-gsap.to(mesh.position, { duration: 1, delay: 3, x: 0 })
+// gsap.to(mesh.position, { duration: 1, delay: 1, x: 2 })
+// gsap.to(mesh.position, { duration: 1, delay: 2, x: -2 })
+// gsap.to(mesh.position, { duration: 1, delay: 3, x: 0 })
 
 const animationOn = false
 
 const looper = () => {
-    // const time = clock.getElapsedTime() // Do not use getDelta(). It will not work
-    // Update
-    // mesh.position.x += .01
-    // mesh.rotation.x = time * Math.PI * 2 // One rotation per second
-    // mesh.rotation.y += .01 * time
-    // mesh.rotation.y = .1 * time
+    const time = clock.getElapsedTime() // Do not use getDelta(). It will not work
+    // // Update
+    mesh.position.y += .01
+    mesh.rotation.x = time * Math.PI * 2 // One rotation per second
+    mesh.rotation.y += .01 * time
+    mesh.rotation.y = .1 * time
     // Render
     renderer.render(scene, camera)
     console.log('loop')
