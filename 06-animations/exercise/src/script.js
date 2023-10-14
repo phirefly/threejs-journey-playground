@@ -1,6 +1,19 @@
 import * as THREE from 'three'
 import gsap from 'gsap'
 
+const cursor = {
+    x: 0,
+    y: 0
+}
+
+// Cursor
+window.addEventListener('mousemove', (event) => {
+    cursor.x = event.clientX / sizes.width - .5
+    cursor.y = event.clientY / sizes.height - .5
+    console.log(cursor.x, cursor.y)
+});
+
+
 // Canvas
 const canvas = document.querySelector('canvas.webgl')
 
@@ -20,13 +33,13 @@ const sizes = {
 }
 
 // Camera
-// const camera = new THREE.PerspectiveCamera(60, sizes.width / sizes.height, 0.1, 100)
+const camera = new THREE.PerspectiveCamera(60, sizes.width / sizes.height, 0.1, 100)
 // First parameter: the vertical field of view
 // Second parameter: the aspect ratio (width/height of the render)
 // Third parameter: the near plane
 // Fourth parameter: the far plane
-const aspectRatio = sizes.width / sizes.height
-const camera = new THREE.OrthographicCamera(-1 * aspectRatio, 1 * aspectRatio, 1, -1, 0.1, 100)
+// const aspectRatio = sizes.width / sizes.height
+// const camera = new THREE.OrthographicCamera(-1 * aspectRatio, 1 * aspectRatio, 1, -1, 0.1, 100)
 camera.position.z = 3
 scene.add(camera)
 
@@ -44,20 +57,24 @@ const clock = new THREE.Clock()
 // gsap.to(mesh.position, { duration: 1, delay: 2, x: -2 })
 // gsap.to(mesh.position, { duration: 1, delay: 3, x: 0 })
 
-const animationOn = false
+const animationOn = true
 
 const looper = () => {
     const time = clock.getElapsedTime() // Do not use getDelta(). It will not work
     // // Update
     // mesh.position.y += .01
-    mesh.rotation.x = time * Math.PI * 2 // One rotation per second
-    mesh.rotation.y += .01 * time
-    mesh.rotation.y = .1 * time
+    // mesh.rotation.x = time * Math.PI * 2 // One rotation per second
+    // mesh.rotation.y += .01 * time
+    // mesh.rotation.y += .1
+    // mesh.rotation.y = .1 * time
     // Render
     renderer.render(scene, camera)
     console.log('loop')
 
     if (animationOn === true) {
+        camera.position.x = cursor.x * 10 // 10 is the distance from the camera
+        camera.position.y = -cursor.y * 10
+        camera.lookAt(mesh.position)
         window.requestAnimationFrame(looper)
     }
 
