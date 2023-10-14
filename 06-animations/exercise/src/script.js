@@ -8,7 +8,7 @@ const canvas = document.querySelector('canvas.webgl')
 const scene = new THREE.Scene()
 
 // Object
-const geometry = new THREE.BoxGeometry(1, 1, 1)
+const geometry = new THREE.BoxGeometry(1, 1, 1, 1)
 const material = new THREE.MeshBasicMaterial({ color: 0xff0000 })
 const mesh = new THREE.Mesh(geometry, material)
 scene.add(mesh)
@@ -16,15 +16,17 @@ scene.add(mesh)
 // Sizes
 const sizes = {
     width: 800,
-    height: 600
+    height: 300
 }
 
 // Camera
-const camera = new THREE.PerspectiveCamera(60, sizes.width / sizes.height, 0.1, 100)
+// const camera = new THREE.PerspectiveCamera(60, sizes.width / sizes.height, 0.1, 100)
 // First parameter: the vertical field of view
 // Second parameter: the aspect ratio (width/height of the render)
 // Third parameter: the near plane
 // Fourth parameter: the far plane
+const aspectRatio = sizes.width / sizes.height
+const camera = new THREE.OrthographicCamera(-1 * aspectRatio, 1 * aspectRatio, 1, -1, 0.1, 100)
 camera.position.z = 3
 scene.add(camera)
 
@@ -47,7 +49,7 @@ const animationOn = false
 const looper = () => {
     const time = clock.getElapsedTime() // Do not use getDelta(). It will not work
     // // Update
-    mesh.position.y += .01
+    // mesh.position.y += .01
     mesh.rotation.x = time * Math.PI * 2 // One rotation per second
     mesh.rotation.y += .01 * time
     mesh.rotation.y = .1 * time
