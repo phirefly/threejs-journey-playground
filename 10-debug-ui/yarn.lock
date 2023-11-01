@@ -150,6 +150,11 @@ gsap@^3.11.5:
   resolved "https://registry.yarnpkg.com/gsap/-/gsap-3.12.2.tgz#6e88203eed360761cbf2a2cb3a8d702aa87f3f6d"
   integrity sha512-EkYnpG8qHgYBFAwsgsGEqvT1WUidX0tt/ijepx7z8EUJHElykg91RvW1XbkT59T0gZzzszOpjQv7SE41XuIXyQ==
 
+lil-gui@^0.19.0:
+  version "0.19.0"
+  resolved "https://registry.yarnpkg.com/lil-gui/-/lil-gui-0.19.0.tgz#bcd8226d23a45dc7ecb833b54f1a24e3d7b1d54d"
+  integrity sha512-02/Z7rPng3GXWFwkQVj1hQaJYo2fIEYctqe0ima5uI/N2HEagB9ZGCQKkVWr3UuKfTr0arto3Q9prTB8sxtJJw==
+
 nanoid@^3.3.6:
   version "3.3.6"
   resolved "https://registry.yarnpkg.com/nanoid/-/nanoid-3.3.6.tgz#443380c856d6e9f9824267d960b4236ad583ea4c"
