@@ -13,11 +13,16 @@ const canvas = document.querySelector('canvas.webgl')
 // Scene
 const scene = new THREE.Scene()
 
+// Global debug object to store all the debug values
+const debugObject = {
+    color: '#3287c8'
+}
+
 /**
  * Object
  */
 const geometry = new THREE.BoxGeometry(1, 1, 1)
-const material = new THREE.MeshBasicMaterial({ color: 0xff0000 })
+const material = new THREE.MeshBasicMaterial({ color: debugObject.color, wireframe: true})
 const mesh = new THREE.Mesh(geometry, material)
 scene.add(mesh)
 
@@ -25,11 +30,38 @@ scene.add(mesh)
  *
  */
 const gui = new GUI();
+
 gui.add('Hello World')
 gui.add(mesh.position, 'y').min(-3).max(3).step(0.01).name('elevation')
 gui.add(mesh.position, 'x').min(-3).max(3).step(0.01).name('horizontal')
 gui.add(mesh.position, 'z').min(-3).max(3).step(0.01).name('depth')
 
+gui.add(mesh, 'visible')
+gui.add(material, 'wireframe') // also can be accessed by mesh.material
+gui.addColor(debugObject, 'color') // also can be accessed by mesh.material.color
+    .onChange(() => {
+        material.color.set(debugObject.color);
+        // console.log("material color: ", material.color);
+        // console.log("value: ", value.getHexString());
+    })
+
+debugObject.spinObject = () => {
+    gsap.to(mesh.rotation, {duration: 1, y: mesh.rotation.y + Math.PI * 2})
+}
+gui.add(debugObject, 'spinObject')
+
+debugObject.subdivision = 2;
+gui.add(debugObject, 'subdivision')
+.min(1)
+.max(20)
+.step(1)
+.onFinishChange(() => {
+    console.log("subdivision changed: ", debugObject.subdivision);
+    // clear out of memory before generating new subdivision
+    mesh.geometry.dispose();
+
+    mesh.geometry = new THREE.BoxGeometry(1, 1, 1, debugObject.subdivision, debugObject.subdivision, debugObject.subdivision);
+})
 /**
  * Sizes
  */
