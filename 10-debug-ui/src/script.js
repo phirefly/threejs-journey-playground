@@ -26,19 +26,23 @@ const material = new THREE.MeshBasicMaterial({ color: debugObject.color, wirefra
 const mesh = new THREE.Mesh(geometry, material)
 scene.add(mesh)
 
+
 /**
  *
  */
 const gui = new GUI();
 
-gui.add('Hello World')
-gui.add(mesh.position, 'y').min(-3).max(3).step(0.01).name('elevation')
-gui.add(mesh.position, 'x').min(-3).max(3).step(0.01).name('horizontal')
-gui.add(mesh.position, 'z').min(-3).max(3).step(0.01).name('depth')
+// Creates a folder in the UI to organize the debug values
+const cubeTweaks = gui.addFolder('Cube Tweaks');
 
-gui.add(mesh, 'visible')
-gui.add(material, 'wireframe') // also can be accessed by mesh.material
-gui.addColor(debugObject, 'color') // also can be accessed by mesh.material.color
+cubeTweaks.add('Hello World')
+cubeTweaks.add(mesh.position, 'y').min(-3).max(3).step(0.01).name('elevation')
+cubeTweaks.add(mesh.position, 'x').min(-3).max(3).step(0.01).name('horizontal')
+cubeTweaks.add(mesh.position, 'z').min(-3).max(3).step(0.01).name('depth')
+
+cubeTweaks.add(mesh, 'visible')
+cubeTweaks.add(material, 'wireframe') // also can be accessed by mesh.material
+cubeTweaks.addColor(debugObject, 'color') // also can be accessed by mesh.material.color
     .onChange(() => {
         material.color.set(debugObject.color);
         // console.log("material color: ", material.color);
@@ -48,10 +52,10 @@ gui.addColor(debugObject, 'color') // also can be accessed by mesh.material.colo
 debugObject.spinObject = () => {
     gsap.to(mesh.rotation, {duration: 1, y: mesh.rotation.y + Math.PI * 2})
 }
-gui.add(debugObject, 'spinObject')
+cubeTweaks.add(debugObject, 'spinObject')
 
 debugObject.subdivision = 2;
-gui.add(debugObject, 'subdivision')
+cubeTweaks.add(debugObject, 'subdivision')
 .min(1)
 .max(20)
 .step(1)
