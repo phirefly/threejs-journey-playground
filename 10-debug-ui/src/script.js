@@ -30,7 +30,19 @@ scene.add(mesh)
 /**
  *
  */
-const gui = new GUI();
+const gui = new GUI({
+    width: 300,
+    title: "Raphy's Debug UI",
+    closeFolders: true
+});
+
+window.addEventListener('keydown', (event) => {
+    if (event.key === 'H') {
+        console.log("H pressed");
+        console.log("Gui hidden: ", gui._hidden);
+        gui.show(gui._hidden);
+    }
+})
 
 // Creates a folder in the UI to organize the debug values
 const cubeTweaks = gui.addFolder('Cube Tweaks');
